@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation_Manager</title>
+    <link rel = "stylesheet" href = "style.css">
+
+</head>
+<body>
+
+    <h1>2025.09</h1>
+    <h2>September</h2>
+
+    <div class="calendar"></div>
+        <span>SUN</span>
+        <span>MON</span>
+        <span>TUE</span>
+        <span>WED</span>
+        <span>THU</span>
+        <span>FRI</span>
+        <span>SAT</span>
+
+
+
+    <div style="display: flex; justify-content: center; margin: 30px 0;">
+      <svg id="pie" width="200" height="200" viewBox="0 0 200 200" style="cursor:pointer;">
+        <circle r="90" cx="100" cy="100" fill="#eee"/>
+        <path id="pie-slice" d="" fill="#4caf50"/>
+        <text id="percent-text" x="100" y="110" text-anchor="middle" font-size="32" fill="#333">0%</text>
+      </svg>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
