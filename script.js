@@ -48,13 +48,30 @@ function describeArc(cx, cy, r, startAngle, endAngle) {
   ].join(" ");
 }
 
+function angleToHour(angle) {
+  let hour = Math.round((angle % 360) / 15);
+  if (hour === 24) hour = 0;
+  return hour;
+}
+
+function showSelectedTime() {
+  const percentText = document.getElementById('percent-text');
+  if (startHour !== null && endHour !== null) {
+    percentText.textContent = `${startHour}:00 ~ ${endHour}:00`;
+  } else if (startHour !== null) {
+    percentText.textContent = `${startHour}:00 ~ `;
+  } else {
+    percentText.textContent = '선택: 없음';
+  }
+}
+
 pie.addEventListener('click', function(e) {
   const rect = pie.getBoundingClientRect();
   const x = e.clientX - rect.left - 100;
   const y = e.clientY - rect.top - 100;
   let angle = Math.atan2(y, x) * 180 / Math.PI + 90;
   if (angle < 0) angle += 360;
-
+  
   if (clickCount === 0) {
     startAngle = angle;
     endAngle = angle;
@@ -63,7 +80,24 @@ pie.addEventListener('click', function(e) {
     clickCount = 1;
     pieSlice.setAttribute('d', ''); // 초기화
     showSelectedTime();
-  } else {
+  }
+
+  if (clickCount === 0) {
+    // 초기화 또는 3번째 클릭 이후
+    startHour = hour;
+    endHour = null;
+    clickCount = 1;
+    showSelectedTime();
+    if (startHour >= 7 && startHour <= 22) {
+      document.getElementById('input-hour').value = startHour;
+    }
+  } 
+
+  if (startHour >= 7 && startHour <= 22) {
+      document.getElementById('input-hour').value = startHour;
+  }
+  
+  else {
     endAngle = angle;
     endHour = angleToHour(endAngle);
     clickCount = 0;
@@ -73,3 +107,49 @@ pie.addEventListener('click', function(e) {
   }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const tbody = document.getElementById('table-body');
+
+  const headerNames = ['요일/시간', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const headerRow = document.createElement('tr');
+  headerNames.forEach((txt, idx) => {
+    const th = document.createElement('th');
+    th.innerText = txt;
+    if (idx === 0) th.style.borderRight = '2px solid black';
+    headerRow.appendChild(th);
+  });
+  tbody.appendChild(headerRow);
+
+  for (let i = 0; i < 16; i++) {
+    const hour = (7 + i).toString().padStart(2, '0') + ':00';
+    const tr = document.createElement('tr');
+
+    const th = document.createElement('th');
+    th.style.borderRight = '2px solid black';
+    th.innerText = hour;
+    tr.appendChild(th);
+
+    for (let j = 1; j <= 7; j++) {
+      const td = document.createElement('td');
+      td.id = `${i + 1}-${j}`;
+      td.innerText = '';
+      tr.appendChild(td);
+    }
+
+    tbody.appendChild(tr);
+  }
+});
+
+
+document.getElementById('submit-plan').addEventListener('click', function() {
+  const hour = parseInt(document.getElementById('input-hour').value, 10);
+  const day = document.getElementById('input-day').value;
+  const plan = document.getElementById('input-plan').value;
+
+  const row = hour - 6;
+  const col = day;
+  const cell = document.getElementById(`${row}-${col}`);
+
+  if (cell) cell.innerText = plan;
+  else alert('테이블 셀을 찾을 수 없습니다.');
+});
