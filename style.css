@@ -2,3 +2,13 @@
     display: grid;
     
 }
+
+.calendar-container {
+    display: inline-flex ;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+h2 {
+    width: 100%;
+}

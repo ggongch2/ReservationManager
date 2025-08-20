@@ -1,3 +1,26 @@
+const monthNames = [
+  'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+] ; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 없앨까생각중 
 const pie = document.getElementById('pie');
 const pieSlice = document.getElementById('pie-slice');
 const percentText = document.getElementById('percent-text');
@@ -73,3 +96,40 @@ pie.addEventListener('click', function(e) {
   }
 });
 
+// 연도, 몇월인지 표시 
+
+ // h1 표시된 날짜를 받아와서 calendarDate객체를 생성(달력을 만들기위함)
+const dateContent = document.querySelector('#currentYearMonth').textContent ; 
+const splitDate = dateContent.split('.') ; 
+let calendarDate = new Date(splitDate) ; 
+
+  // 각각의 버튼을 누르면 달 바꾸기(따로 updateUI 함수를 만들어 관리할수도 있음)
+const prevBtn = document.querySelector('#prevMonth') ; 
+const nextBtn = document.querySelector('#nextMonth') ;  
+
+updateOuterUI() ; 
+
+prevBtn.addEventListener('click', () => {
+  calendarDate.setMonth(calendarDate.getMonth()-1) ; 
+  updateOuterUI() ;
+})
+
+
+nextBtn.addEventListener('click', () => {
+  calendarDate.setMonth(calendarDate.getMonth()+1) ; 
+  updateOuterUI() ; 
+})
+
+function updateOuterUI(){
+  let year = calendarDate.getFullYear(), month = calendarDate.getMonth() + 1;
+    // 포매팅
+  if(month <= 9) month = '0' + month ; 
+  const h1Content = year+'.'+month ; 
+  document.querySelector('#currentYearMonth').textContent = h1Content ; 
+
+  const monthName = document.querySelector('#monthName') ;
+  const monthIdx = calendarDate.getMonth() ;
+  monthName.textContent = monthNames[monthIdx] ;
+}
+
+// 달력표시함수 라이브러리로 해야할거 같음!!!!!!!!!!!!!!!!!!!!!!!!!!!
