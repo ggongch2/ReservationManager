@@ -12,3 +12,17 @@
 h2 {
     width: 100%;
 }
+
+
+#fullCalendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1) > div > button.fc-prev-button.fc-button.fc-button-primary { 
+    color : blue ;  
+    background-color: greenyellow;
+}
+#fullCalendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1) > div > button.fc-next-button.fc-button.fc-button-primary {
+    color : blue ;  
+    background-color: greenyellow;
+}
+
+.fc-day-past {
+    background-color: rgb(95, 95, 95);
+}

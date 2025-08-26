@@ -2,8 +2,9 @@ const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
 ] ; 
 
+var today = new Date() ;
 
-
+today.setHours(0, 0, 0, 0) ; 
 
 
 
@@ -132,4 +133,99 @@ function updateOuterUI(){
   monthName.textContent = monthNames[monthIdx] ;
 }
 
+
+/// <-- 이 위에까지 걍 없어도 될거같음 
+
+
+
+
+
 // 달력표시함수 라이브러리로 해야할거 같음!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  var calendarEl = document.getElementById('fullCalendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    
+
+    
+    initialView: 'dayGridMonth', // 초기 뷰 설정 (월 단위)
+    height : 800, // 달력 높이 설정
+  
+    headerToolbar: {
+      left : 'prev,next today', 
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+    },
+    eventTimeFormat: { hour: '2-digit', minute: '2-digit', meridiem: false, hour12: false }, // 시간 표시는 00:00 ~ 24:00 
+
+    slotLabelFormat: {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false, 
+    },          // timeGridWeek 에 사용될 시간표시 
+
+    editable: true,     // 드래그, 크기 조절 가능
+    selectable: true,   // 날짜 범위 선택 가능
+
+    datesSet : function(info) { // 날짜 선택범위 조절하는 메서드
+      var viewType = info.view.type ;
+      if (viewType === 'dayGridMonth') {
+        today.setHours(0, 0, 0, 0) ; 
+        calendar.setOption('selectConstraint', {start : today}) ; 
+      }
+
+      else if (viewType === 'timeGridWeek'){
+        today = new Date() ;
+        calendar.setOption('selectConstraint', {start : today}) ; 
+      }
+
+      else if (viewType === 'timeGridDay'){
+        today = new Date() ;
+        calendar.setOption('selectConstraint', {tart : today}) ; 
+      }
+
+    }, 
+
+    
+
+
+
+    // 달력에 표시할 이벤트 데이터 (예시)
+    events: [
+      {
+        title: '내 이벤트 1',
+        start: '2025-08-27'
+      },
+      {
+        title: '내 이벤트 2',
+        start: '2025-08-28T10:00:00',
+        end: '2025-08-28T18:00:00'
+      }
+    ],
+    views : {
+      dayGridMonth : {
+        
+
+      },
+      timeGridWeek : {
+        slotMinTime : '06:00:00',
+        slotMaxTime : '24:00:00', 
+        slotDuration :  '00:30:00',
+      },
+      timeGridDay : {
+
+      },
+      
+    }
+  });
+  
+  calendar.render(); // 달력 렌더링
+});
+
+// 해야하는 거 일단 month view에서 과거 날짜들은 모두 배경색 gray 처리 <-- week랑 day도 동일 
+
+
+
+
+
