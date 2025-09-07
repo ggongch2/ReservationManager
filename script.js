@@ -95,6 +95,16 @@ document.addEventListener('DOMContentLoaded', function() {
       else if (viewType === 'timeGridDay'){
         today = new Date() ;
         calendar.setOption('selectConstraint', {start : today}) ; 
+        
+        const timeGridSlots = document.querySelectorAll('.fc-timegrid-slot') ; 
+        for (const slot of timeGridSlots) {
+          const slotTime = slot.getAttribute('data-time') ; 
+          const slicedTime = slotTime.slice(0, 2) + slotTime.slice(3, 5); 
+          if(parseInt(slicedTime)  < parseInt(getHourMinute(today))){
+            slot.classList.add('fc-past-time') ; 
+          }
+        }
+
       }
 
     }, 
@@ -118,10 +128,9 @@ document.addEventListener('DOMContentLoaded', function() {
     views : {
       dayGridMonth : {
         
-
       },
       timeGridWeek : {
-        slotMinTime : '06:00:00',
+        slotMinTime : '00:00:00',
         slotMaxTime : '24:00:00', 
         slotDuration :  '00:30:00',
       },
@@ -135,18 +144,39 @@ document.addEventListener('DOMContentLoaded', function() {
       const clickedDate = info.date ;
       const view = info.view.type ; 
 
+        // 날짜 클릭했을때 그 날짜로 이동
       if(view === "dayGridMonth"){
         calendar.gotoDate(clickedDate) ;
         calendar.changeView('timeGridDay') ; 
         
       }
 
+      
+
+    },
+
+    // 드래그했을때 동작 정의
+    select : function(info) {
+      if(info.view.type === 'timeGridWeek' || info.view.type === 'timeGridDay'){
+        let title = prompt('이벤트 이름 :') ;
+        if(title) {
+          this.addEvent({
+            title : title,
+            start : info.start,
+            end : info.end
+          }) ;
+        }
+        this.unselect() ;
+      }
+    
+
+
+
 
     }
 
 
-
-  });
+  }); 
   
   calendar.render(); // 달력 렌더링
 });
@@ -160,17 +190,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  // 예약 관리가 주 목적인만큼, 해당날짜 클릭했을때 예약 추가되는거 기능추가
+  // -> 이거의 경우는 timeGridWeek, timeGridDay에서 시간을 드래그해서 추가되게하는걸로 해야할듯 
+ 
+  
  // 디퐅트 스케줄을 추가하고 그게 유지 되야함(예를들어 시간표를 입력했을때 그게 매주 유지되도록 : 기간도 정할 수 있으면 좋을듯)
  // 누군가 예약을 할 수 있도록 사용자와 관리자가 분리되야할듯   
- // 날짜를 클릭했을때 해당일의 날짜가 보이도록 설정되야할듯
-
-// 한 거 : 달력에서 날짜 누르면 그 날짜로 이동함
 
 
 
 
+// 한 거 : 달력에서 날짜 누르면 그 날짜로 이동함 -> 그 날짜에서 지나간 시간도 회색처리함
+
+// 고쳐야할것 : weekview에서 회색(지나간시간)이 오른쪽 아직 지나지않은 날도 침범함 고쳐야ㅐ함
 
 
+// 해달 날짜에서 시간+분을 가져오는 메서드 
+ // 12:03이면 리턴값 1203
+function getHourMinute(targetDate) {
+  const hours = ('0' + targetDate.getHours()).slice(-2) ;
+  const minutes = ('0' + targetDate.getMinutes()).slice(-2) ;
+  return hours + minutes ; 
+} 
 
 
 
