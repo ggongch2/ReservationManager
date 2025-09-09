@@ -1,50 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Reservation_Manager</title>
-      <link rel = "stylesheet" href = "style.css">
-      <script src="script.js" defer></script>
-  </head>
-  <body>
-      <h1>2025-2</h1>
-      <h2>Time_table</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation_Manager</title>
+    <link rel = "stylesheet" href = "style.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
 
-      <table>
-        <tbody id="table-body"></tbody>
-      </table>
 
-      <div style="margin-bottom: 20px;">
-        <label>시간:
-          <input type="number" id="input-hour" min="7" max="22" value="7">
-        </label>
+</head>
+<body>
 
-        <label>요일:
-          <select id="input-day">
-            <option value="1">MON</option>
-            <option value="2">TUE</option>
-            <option value="3">WED</option>
-            <option value="4">THU</option>
-            <option value="5">FRI</option>
-            <option value="6">SAT</option>
-            <option value="7">SUN</option>
-          </select>
-        </label>
+    <div class = "calendar-container">
+      <button id = "prevMonth">&#9664</button>
+      <h1 id = "currentYearMonth">2027.02</h1>
+      <button id = "nextMonth">&#9654</button>
+      <h2 id = "monthName">September</h2>
+    </div> 
 
-        <label>일정:
-          <input type="text" id="input-plan" placeholder="일정 내용을 입력하세요">
-        </label>
 
-        <button type="button" id="submit-plan">등록</button>
-      </div>
 
-      <div style="display: flex; justify-content: center; margin: 30px 0;">
-        <svg id="pie" width="200" height="200" viewBox="0 0 200 200" style="cursor:pointer;">
-          <circle r="90" cx="100" cy="100" fill="#eee"/>
-          <path id="pie-slice" d="" fill="#4caf50"/>
-          <text id="percent-text" x="100" y="110" text-anchor="middle" font-size="32" fill="#333">0%</text>
-        </svg>
-      </div>
-  </body>
+    <div class="calendar">
+      <div id='fullCalendar'></div>
+    </div>
+
+
+    <div style="display: flex; justify-content: center; margin: 30px 0;">
+      <svg id="pie" width="200" height="200" viewBox="0 0 200 200" style="cursor:pointer;">
+        <circle r="90" cx="100" cy="100" fill="#eee"/>
+        <path id="pie-slice" d="" fill="#4caf50"/>
+        <text id="percent-text" x="100" y="110" text-anchor="middle" font-size="32" fill="#333">0%</text>
+      </svg>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
 </html>
