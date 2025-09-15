@@ -4,6 +4,9 @@ const monthNames = [
 
 var today = new Date() ;
 
+time간격 = 15
+onepixel = 24
+
 today.setHours(0, 0, 0, 0) ; 
 
 
@@ -96,15 +99,22 @@ document.addEventListener('DOMContentLoaded', function() {
         today = new Date() ;
         calendar.setOption('selectConstraint', {start : today}) ; 
         
-        const timeGridSlots = document.querySelectorAll('.fc-timegrid-slot') ; 
-        for (const slot of timeGridSlots) {
-          const slotTime = slot.getAttribute('data-time') ; 
-          const slicedTime = slotTime.slice(0, 2) + slotTime.slice(3, 5); 
-          if(parseInt(slicedTime)  < parseInt(getHourMinute(today))){
-            slot.classList.add('fc-past-time') ; 
-          }
-        }
+        tag = document.querySelectorAll(`[data-date = "${XXXX_XX_XX(today)}"]`)[2]
 
+        viewdate = document.querySelector('[role = columnheader]').dataset.date
+        if(viewdate == XXXX_XX_XX(today)){
+          bg = tag.querySelector(".fc-timegrid-col-bg")
+
+          m = today.getHours() * 60 + today.getMinutes()
+          length = (parseInt(m / time간격) + 1) * onepixel
+
+          div = document.createElement('div')
+          div.className = "fc-mg-past-time"
+
+          div.style.bottom = "-" + length + 'px'
+
+          bg.appendChild(div)
+        }
       }
 
     }, 
@@ -132,10 +142,12 @@ document.addEventListener('DOMContentLoaded', function() {
       timeGridWeek : {
         slotMinTime : '00:00:00',
         slotMaxTime : '24:00:00', 
-        slotDuration :  '00:30:00',
+        slotDuration :  `00:${time간격}:00`,
       },
       timeGridDay : {
-
+        slotMinTime : '00:00:00',
+        slotMaxTime : '24:00:00', 
+        slotDuration :  `00:${time간격}:00`,
       },
       
     },
@@ -206,6 +218,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 해달 날짜에서 시간+분을 가져오는 메서드 
  // 12:03이면 리턴값 1203
+
+function XXXX_XX_XX(targetDate){
+  const year = targetDate.getFullYear()
+  const month = ('0' + (targetDate.getMonth() + 1)).slice(-2)
+  const date = ('0' + targetDate.getDate()).slice(-2)
+
+  return `${year}-${month}-${date}`
+}
 function getHourMinute(targetDate) {
   const hours = ('0' + targetDate.getHours()).slice(-2) ;
   const minutes = ('0' + targetDate.getMinutes()).slice(-2) ;

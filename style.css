@@ -30,3 +30,12 @@ h2 {
 .fc-past-time {
     background-color: rgb(95, 95, 95);
 }
+
+.fc-mg-past-time {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    opacity: 0.3;
+    top: 0px;
+    background-color: rgb(95, 95, 95);
+}
