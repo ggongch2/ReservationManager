@@ -3,18 +3,39 @@
     
 }
 
-table {
-  width: 100%;
-  table-layout: fixed;  
+.calendar-container {
+    display: inline-flex ;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-th, td {
-  border: 1px solid black;
-  width: 20px;
-  height: 20px; 
-  text-align: center;
+h2 {
+    width: 100%;
 }
 
-h1, h2 {
-    text-align: center;
+
+#fullCalendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1) > div > button.fc-prev-button.fc-button.fc-button-primary { 
+    color : blue ;  
+    background-color: greenyellow;
+}
+#fullCalendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1) > div > button.fc-next-button.fc-button.fc-button-primary {
+    color : blue ;  
+    background-color: greenyellow;
+}
+
+.fc-day-past {
+    background-color: rgb(95, 95, 95);
+}
+
+.fc-past-time {
+    background-color: rgb(95, 95, 95);
+}
+
+.fc-mg-past-time {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    opacity: 0.3;
+    top: 0px;
+    background-color: rgb(95, 95, 95);
 }
